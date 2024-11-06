@@ -7,16 +7,16 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - run: docker build -t builder .
       - run: git clone --depth=1 --branch master https://github.com/mobile-shell/mosh.git
       - run: docker run -v $PWD/mosh:/mosh -w /mosh --name=builder builder sh -c './autogen.sh && LDFLAGS=-static ./configure && make'
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: mosh-server
           path: mosh/src/frontend/mosh-server
           if-no-files-found: error
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: mosh-client
           path: mosh/src/frontend/mosh-client
